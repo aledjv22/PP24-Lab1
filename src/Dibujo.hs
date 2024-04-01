@@ -1,10 +1,30 @@
 module Dibujo (encimar, 
-    -- agregar las funciones constructoras
+    Dibujo,
+    figura, rotar, espejar, rot45, apilar, juntar, encimar,
+    r180, r270,
+    (.-.), (///), (^^^),
+    cuarteto, encimar4, ciclar,
+    foldDib, mapDib,
+    --figura
     ) where
 
+{-
+<Dibujo> ::= Figura <Fig> | Rotar <Dibujo> | Espejar <Dibujo> 
+    | Rot45 <Dibujo>
+    | Apilar <Float> <Float> <Dibujo> <Dibujo> 
+    | Juntar <Float> <Float> <Dibujo> <Dibujo> 
+    | Encimar <Dibujo> <Dibujo>
+-}
 
 -- nuestro lenguaje 
-data Dibujo a = Dibujo
+data Dibujo a = Figura a
+    | Rotar (Dibujo a) 
+    | Espejar (Dibujo a) 
+    | Rot45 (Dibujo a)
+    | Apilar (Float) (Float) (Dibujo a) (Dibujo a) 
+    | Juntar (Float) (Float) (Dibujo a) (Dibujo a) 
+    | Encimar (Dibujo a) (Dibujo a)
+    deriving (Eq, Show)
 
 -- combinadores
 infixr 6 ^^^
@@ -19,45 +39,51 @@ comp n f = undefined
 
 -- Funciones constructoras
 figura :: a -> Dibujo a
-figura = undefined
+figura = Figura
 
 encimar :: Dibujo a -> Dibujo a -> Dibujo a
-encimar = undefined
+encimar = Encimar
 
 apilar :: Float -> Float -> Dibujo a -> Dibujo a -> Dibujo a
-apilar = undefined
+apilar = Apilar
 
 juntar  :: Float -> Float -> Dibujo a -> Dibujo a -> Dibujo a
 juntar = Juntar
 
 rot45 :: Dibujo a -> Dibujo a
-rot45 = undefined
+rot45 = Rot45
 
 rotar :: Dibujo a -> Dibujo a
-rotar = undefined
+rotar = Rotar
 
 
 espejar :: Dibujo a -> Dibujo a
 espejar = undefined
 
+-- Superpone un dibujo con otro.
 (^^^) :: Dibujo a -> Dibujo a -> Dibujo a
-(^^^) = undefined
+(^^^) a b = encimar a b 
 
+-- Pone el primer dibujo arriba del segundo, ambos ocupan el mismo espacio.
 (.-.) :: Dibujo a -> Dibujo a -> Dibujo a
-(.-.) = undefined
+(.-.) x y = apilar 1 1 x y
 
+-- Pone un dibujo al lado del otro, ambos ocupan el mismo espacio.
 (///) :: Dibujo a -> Dibujo a -> Dibujo a
-(///) = undefined
+(///) a b = juntar 1 1 a b
+
+{- en /// y .-. puse como parametros 1 1 porque en la pagina 4 del enunciado 
+esta asi el ejemplo, pero hay que verificar -}
 
 -- rotaciones
 r90 :: Dibujo a -> Dibujo a
-r90 = undefined
+r90 = rotar
 
 r180 :: Dibujo a -> Dibujo a
-r180 = undefined
+r180 = rotar . rotar
 
 r270 :: Dibujo a -> Dibujo a
-r270 = undefined
+r270 = rotar . rotar . rotar
 
 -- una figura repetida con las cuatro rotaciones, superimpuestas.
 encimar4 :: Dibujo a -> Dibujo a
