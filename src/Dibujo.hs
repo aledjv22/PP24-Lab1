@@ -1,4 +1,4 @@
-module Dibujo (encimar, 
+module Dibujo (
     Dibujo,
     figura, rotar, espejar, rot45, apilar, juntar, encimar,
     r180, r270,
@@ -79,23 +79,24 @@ esta asi el ejemplo, pero hay que verificar -}
 r90 :: Dibujo a -> Dibujo a
 r90 = rotar
 
-r180 :: Dibujo a -> Dibujo a
-r180 = rotar . rotar
+r180 :: Dibujo a -> Dibujo a -- r180 a = rotar (rotar a)
+r180 = rotar . rotar 
 
-r270 :: Dibujo a -> Dibujo a
+r270 :: Dibujo a -> Dibujo a -- r270 a = rotar (rotar (rotar a))
 r270 = rotar . rotar . rotar
 
 -- una figura repetida con las cuatro rotaciones, superimpuestas.
 encimar4 :: Dibujo a -> Dibujo a
-encimar4 = undefined
+encimar4 a = (^^^) ((^^^) a (rotar a)) ((^^^) (r180 a) (r270 a))
 
 -- cuatro figuras en un cuadrante.
 cuarteto :: Dibujo a -> Dibujo a -> Dibujo a -> Dibujo a -> Dibujo a
-cuarteto = undefined
+cuarteto d1 d2 d3 d4 = (.-.) ((///) d1 d2) ((///) d3 d4)
 
 -- un cuarteto donde se repite la imagen, rotada (¡No confundir con encimar4!)
 ciclar :: Dibujo a -> Dibujo a
-ciclar = undefined
+ciclar a = (.-.)((///) a (rotar a)) ((///) (r180 a) (r270 a))
+{- verificar si esto esta bien -}
 
 -- map para nuestro lenguaje
 mapDib :: (a -> b) -> Dibujo a -> Dibujo b
