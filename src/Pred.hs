@@ -1,6 +1,6 @@
 module Pred (
   Pred,
-  cambiar, anyDib, allDib, orP, andP, falla
+  cambiar, anyFig, allFig, orP, andP, falla
 ) where
 
 import Dibujo
@@ -24,15 +24,21 @@ cambiar p f =  undefined
 
 
 -- Alguna básica satisface el predicado.
-anyDib = undefined
+anyFig :: Pred a -> Dibujo a -> Bool
+anyFig p d = foldDib p id id id (\_ _ d1 d2 -> d1 || d2) (\_ _ d1 d2 -> d1 || d2) (||) d
 
--- Todas las básicas satisfacen el predicado.
-allDib = undefined
+-- Todas las figuras satisfacen el predicado.
+allFig :: Pred a -> Dibujo a -> Bool
+allFig p d = foldDib p id id id (\_ _ d1 d2 -> d1 && d2) (\_ _ d1 d2 -> d1 && d2) (&&) d
+
 
 -- Los dos predicados se cumplen para el elemento recibido.
-andP = undefined
+andP :: Pred a -> Pred a -> Pred a
+andP p1 p2 p3 = p1 p3 && p2 p3
+
 
 -- Algún predicado se cumple para el elemento recibido.
-orP = undefined
+orP :: Pred a -> Pred a -> Pred a
+orP p1 p2 p3 =  p1 p3 || p2 p3
 
 falla = True

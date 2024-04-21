@@ -48,6 +48,7 @@ library
     build-depends:    base ^>=4.17.2.1,
                       gloss ^>=1.13.2.2,
                       -- haha ^>=0.3.1.1,
+                      mtl ^>= 2.2.2,
     hs-source-dirs:   src
     default-language: Haskell2010
 
@@ -63,6 +64,7 @@ executable dibujos
                       --Dibujos.Ejemplo,
                       Dibujos.Feo,
                       Dibujos.Grilla,
+                      Dibujos.Escher,
                       --Dibujos.Cuadrados
     exposed-modules:  Dibujo, Pred, Interp
     build-depends:    base ^>=4.17.2.1,
@@ -70,7 +72,9 @@ executable dibujos
                       haha ^>=0.3.1.1,
                       containers ^>=0.6.8,
                       lucid-svg ^>=0.7.1.1,
-                      text ^>=2.0.2
+                      text ^>=2.0.2,
+                      mtl ^>= 2.2.2
+                      -- Si no dice que no existe Control.Monad.RWS (Ap) y causa error
     hs-source-dirs:   src
     default-language: Haskell2010
 

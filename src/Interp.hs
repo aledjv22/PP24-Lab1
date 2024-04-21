@@ -8,6 +8,7 @@ import Dibujo
 import FloatingPic
 import Graphics.Gloss (Display (InWindow), color, display, makeColorI, pictures, translate, white, Picture)
 import qualified Graphics.Gloss.Data.Point.Arithmetic as V
+import Dibujo (foldDib)
 
 -- Dada una computación que construye una configuración, mostramos por
 -- pantalla la figura de la misma de acuerdo a la interpretación para
@@ -52,5 +53,12 @@ api m n f g d w h = pictures [f (d V.+ h') w (r V.* h), g d w h']
         r = m / (m + n)
         h' = r' V.* h
 
+-- Suponemos que la biblioteca provee el tipo Vector y Picture.
+-- type FloatingPic = Vector -> Vector -> Vector -> Picture
+-- type Output a = a -> FloatingPic
+-- de FloatingPic.hs
+-- de Graphics.Gloss Vector y Picture
+
 interp :: Output a -> Output (Dibujo a)
-interp b = undefined
+interp b = foldDib b rot esp r45 api jun sup
+-- foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar d 

@@ -103,13 +103,13 @@ ciclar d = cuarteto d (r90 d) (r180 d) (r270 d)
 -- map para nuestro lenguaje
 mapDib :: (a -> b) -> Dibujo a -> Dibujo b
 mapDib f d = case d of
-    Figura d -> Figura (f d)
+    Figura fig -> Figura (f fig)
     Encimar d1 d2 -> Encimar (mapDib f d1) (mapDib f d2)
     Apilar n1 n2 d1 d2 -> Apilar n1 n2 (mapDib f d1) (mapDib f d2)
     Juntar n1 n2 d1 d2 -> Juntar n1 n2 (mapDib f d1) (mapDib f d2)
-    Rot45 d -> Rot45 (mapDib f d)
-    Rotar d -> Rotar (mapDib f d)
-    Espejar d -> Espejar (mapDib f d)
+    Rot45 dib -> Rot45 (mapDib f dib)
+    Rotar dib -> Rotar (mapDib f dib)
+    Espejar dib -> Espejar (mapDib f dib)
 
 -- verificar que las operaciones satisfagan
 -- 1. map figura = id
@@ -144,25 +144,25 @@ foldDib ::
   Dibujo a ->
   b
 foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar d = case d of
-    Figura d -> fFigura d
+    Figura fig -> fFigura fig
     Encimar d1 d2 -> fEncimar (foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar d1)
                             (foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar d2)
     Apilar n1 n2 d1 d2 -> fApilar n1 n2 (foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar d1)
                                         (foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar d2)
     Juntar n1 n2 d1 d2 -> fJuntar n1 n2 (foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar d1)
                                         (foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar d2)
-    Rot45 d -> fRotar45 (foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar d)
-    Rotar d -> fRotar (foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar d)
-    Espejar d -> fEspejar (foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar d)
+    Rot45 dib -> fRotar45 (foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar dib)
+    Rotar dib -> fRotar (foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar dib)
+    Espejar dib -> fEspejar (foldDib fFigura fRotar fEspejar fRotar45 fApilar fJuntar fEncimar dib)
 
 -- Extrae todas las figuras básicas de un dibujo.
 figuras :: Dibujo a -> [a]
 figuras d = case d of
-    Figura a -> [a]
+    Figura fig -> [fig]
     Encimar d1 d2 -> figuras d1 ++ figuras d2 
-    Apilar n1 n2 d1 d2 -> figuras d1 ++ figuras d2 
-    Juntar n1 n2 d1 d2 -> figuras d1 ++ figuras d2
-    Rot45 d -> figuras d 
-    Rotar d -> figuras d 
-    Espejar d -> figuras d 
+    Apilar _ _ d1 d2 -> figuras d1 ++ figuras d2 
+    Juntar _ _ d1 d2 -> figuras d1 ++ figuras d2
+    Rot45 dib -> figuras dib
+    Rotar dib -> figuras dib 
+    Espejar dib -> figuras dib
 

@@ -41,3 +41,13 @@ Al responder tranformar cada pregunta en una subsección para que sea más fáci
 
 # 4. Extras
 Completar si hacen algo.
+
+
+# 5. COSAS QUE HACER
+1. En Pred.hs:
+    andP y orP estan bien definidas?
+    Hacer la funcion cambiar
+2. En Dibujo.hs:
+    Hacer la funcion change
+3. En Escher.hs:
+    Fijarse por que no hace el dibujo bien

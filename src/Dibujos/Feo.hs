@@ -114,3 +114,6 @@ feoConf = Conf {
     , pic = testAll
     , bas = interpBas
 }
+
+-- cabal build
+-- cabal run exes -- Feo
