@@ -4,14 +4,14 @@ module Dibujos.Escher
 ) where
 
 
-import Dibujo (Dibujo, figura, juntar, apilar, rot45, rotar, encimar, espejar, cuarteto, r270, r180)
+import Dibujo (Dibujo, figura, encimar4, juntar, apilar, rot45, rotar, encimar, espejar, cuarteto, r270, r180)
 import FloatingPic(Conf(..), Output, half, vacia)
 import qualified Graphics.Gloss.Data.Point.Arithmetic as V
-import Graphics.Gloss ( Picture, blue, red, color, line, pictures )
+import Graphics.Gloss ( Picture, blue, red, azure, color, line, pictures )
 
 interpEscher :: Output Escher
-interpEscher fig x y w | fig = pictures [color red (line $ map (x V.+) [(0,0), y V.+ half w, w, (0,0)])] 
-                       | fig == blank = vacia x y w
+interpEscher fig x y w = if fig then pictures [color azure (line $ map (x V.+) [(0,0), y, w, (0,0)])]  else vacia x y w
+-- vacia = blank pero de Graphics.Gloss, esta en FloatingPic
 
 -- Supongamos que eligen.
 type Escher = Bool
@@ -19,20 +19,23 @@ type Escher = Bool
 blank :: Bool
 blank = False
 
+
+
+fish2 p = espejar (rot45 p)
+
+fish3 p = r270 (fish2 p)
+
 -- El dibujo u.
 dibujoU :: Dibujo Escher -> Dibujo Escher
-dibujoU p = encimar
-            (encimar p (rotar p))
-            (encimar (r180 p) (r270 p))
--- No sirve ciclar :(
+dibujoU p = encimar4 (fish2 p)
 
 -- El dibujo t.
 dibujoT :: Dibujo Escher -> Dibujo Escher
 dibujoT p = encimar
             p
             (encimar
-                (espejar (rot45 p))
-                (r270 (rot45 p)))
+                (fish2 p)
+                (fish3 p))
 
 {-
 lado(1, f) = cuarteto(blank, blank, rotar(dibujo_t(f)), dibujo_t(f))
@@ -81,19 +84,22 @@ escher n f = noneto
 row :: [Dibujo a] -> Dibujo a
 row [] = error "row: no puede ser vacío"
 row [d] = d
-row (d:ds) = juntar (fromIntegral $ length ds) 1 d (row ds)
+row (d:ds) = juntar 1 (fromIntegral $ length ds) d (row ds)
 
 column :: [Dibujo a] -> Dibujo a
 column [] = error "column: no puede ser vacío"
 column [d] = d
-column (d:ds) = apilar (fromIntegral $ length ds) 1 d (column ds)
+column (d:ds) = apilar 1 (fromIntegral $ length ds) d (column ds)
 
 grilla :: [[Dibujo a]] -> Dibujo a
 grilla = column . map row
 
 useGrilla :: Dibujo Escher
 useGrilla = grilla [[escher 2 True]]
-
+-- el valor de escher (en este caso 2) se puede
+-- modificar para definir el nivel de profuncidad
+-- 17 parece ser el limite en donde carga en un 
+-- tiempo razonable (al menos en mi PC)
 
 escherConf :: Conf
 escherConf = Conf {
