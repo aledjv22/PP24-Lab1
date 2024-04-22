@@ -4,7 +4,7 @@ module Dibujo (
     r180, r270,
     (.-.), (///), (^^^),
     cuarteto, encimar4, ciclar,
-    foldDib, mapDib,
+    foldDib, mapDib, change,
     --figura
     ) where
 import Control.Monad.RWS (Ap)
@@ -117,7 +117,14 @@ mapDib f d = case d of
 
 -- Cambiar todas las básicas de acuerdo a la función.
 change :: (a -> Dibujo b) -> Dibujo a -> Dibujo b
-change f d = undefined-- foldDib f rotar espejar rot45 apilar juntar encimar 
+change f d = case d of
+    Figura fig -> f fig
+    Encimar d1 d2 -> Encimar (change f d1) (change f d2)
+    Apilar n1 n2 d1 d2 -> Apilar n1 n2 (change f d1) (change f d2)
+    Juntar n1 n2 d1 d2 -> Juntar n1 n2 (change f d1) (change f d2)
+    Rot45 dib -> Rot45 (change f dib)
+    Rotar dib -> Rotar (change f dib)
+    Espejar dib -> Espejar (change f dib)
 
 {-
 *mapDib sirve para transformaciones elemento a elemento mientras preserva la estructura del dibujo. 
@@ -130,7 +137,6 @@ change f d = undefined-- foldDib f rotar espejar rot45 apilar juntar encimar
     proporcionada (f) que pasa para cambiar puede alterar potencialmente los datos asociados con el elemento Figura.
 
 -}
-
 
 -- Principio de recursión para Dibujos.
 foldDib ::

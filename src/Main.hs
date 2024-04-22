@@ -13,6 +13,7 @@ import Control.Monad (when)
 import InterpHaha (ConfH, simpleHaha, initialH')
 import InterpSVG (ConfSVG, initialSVG', simpleSVG)
 
+
 -- Lista de configuraciones de los dibujos
 configs :: [Conf]
 --configs = [ejemploConf, feoConf,cuadConf 3]
@@ -44,6 +45,18 @@ main = do
   when (head args == "-l") $ do
     putStrLn "Los dibujos disponibles son:"
     mapM_ (putStrLn . name) configs
+    exitSuccess
+  when (head args == "--list") $ do
+    putStrLn "Los dibujos disponibles son:"
+    mapM_ (putStrLn . name) configs
+    putStrLn ""
+    putStrLn "Seleccione uno a mostrar:"
+    line <- getLine
+    -- <- is what happened. <- is your IO friend. 
+    --It allows you to bring out the value that is 
+    --tainted by the IO within a monad and use it 
+    --with your normal functions. 
+    initial' configs line
     exitSuccess
   when (head args == "-a" && not (null $ tail args)) $ do
     initialH' configsH (args!!1) 

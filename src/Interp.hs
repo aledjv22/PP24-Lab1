@@ -22,6 +22,7 @@ initial (Conf n dib intBas) size = display win white $ withGrid fig size
     desp = -(size / 2)
     withGrid p x = translate desp desp $ pictures [p, color grey $ grid (ceiling $ size / 10) (0, 0) x 10]
     grey = makeColorI 100 100 100 100
+    
 
 -- Interpretación de (^^^)
 {- formulas sacadas del enunciado (pag 9) -}

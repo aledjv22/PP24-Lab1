@@ -44,10 +44,12 @@ Completar si hacen algo.
 
 
 # 5. COSAS QUE HACER
-1. En Pred.hs:
-    andP y orP estan bien definidas?
-    Hacer la funcion cambiar
-2. En Dibujo.hs:
-    Hacer la funcion change
-3. En Escher.hs:
-    Fijarse por que no hace el dibujo bien
+4. Tests
+    Deben agregar tests en la carpeta Tests.  Recomendamos fuertemente utilizar GitHub Copilot 
+    para hacerlos.  El fin de esta recomendación es doble: por un lado, aliviar la tarea de 
+    crear los tests, y por otro, aprender los límites de las herramientas de Inteligencia 
+    Artificial.
+    Debe haber al menos tests para los módulos Pred y Dibujo. Copilot sugiere HUnit, y es una 
+    buena opción. Deben agregar una sección en dibujos.cabal como está la sección test-suite 
+    predicados.
+5. Preguntas

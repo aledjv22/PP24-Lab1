@@ -15,7 +15,7 @@ type Basica = (CoordX, CoordY) -- d
 -- type FloatingPic = Vector -> Vector -> Vector -> Picture
 -- type Output a = a -> Vector -> Vector -> Vector -> Picture
 interpCoord :: Output Basica
-interpCoord (x, y) _ _ _ = translate (fromIntegral y*80 + 26) (fromIntegral (-(x*80) + 760)) (scale 0.1 0.1 (text (show (x, y))))
+interpCoord (x, y) _ _ _ = translate (fromIntegral y*102 + 26) (fromIntegral (-(x*102) + 760)) (scale 0.1 0.1 (text (show (x, y))))
 -- Entonces scale me da una imagen escalada a 1/10 de la original, la original siendo una
 -- imagen formada a partir de una fuente de vectores, le damos a text el string de show 
 -- de los vectores coordenada x,y.
@@ -30,12 +30,12 @@ interpCoord (x, y) _ _ _ = translate (fromIntegral y*80 + 26) (fromIntegral (-(x
 row :: [Dibujo a] -> Dibujo a
 row [] = error "row: no puede ser vacío"
 row [d] = d
-row (d:ds) = juntar (fromIntegral $ length ds) 1 d (row ds)
+row (d:ds) = juntar 1 (fromIntegral $ length ds) d (row ds)
 
 column :: [Dibujo a] -> Dibujo a
 column [] = error "column: no puede ser vacío"
 column [d] = d
-column (d:ds) = apilar (fromIntegral $ length ds) 1 d (column ds)
+column (d:ds) = apilar 1 (fromIntegral $ length ds) d (column ds)
 
 grilla :: [[Dibujo a]] -> Dibujo a
 grilla = column . map row
