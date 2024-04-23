@@ -16,6 +16,11 @@ testFigura = TestCase $ assertEqual "Figura" expected result
     result = figura "a"
 
 -- Tests para 'rot45', 'r90', 'r180', 'r270'
+testRot180 = TestCase $ assertEqual "Rotation 180 degrees twice" expected result
+  where
+    expected = testDibujo
+    result = r180 $ r180 testDibujo
+
 testRot45 = TestCase $ assertEqual "Rotar 45 grados" expected result
   where
     expected = rot45 testDibujo
@@ -25,11 +30,6 @@ testRot90 = TestCase $ assertEqual "Rotar 90 grados cuatro veces" expected resul
   where
     expected = testDibujo
     result = r90 $ r90 $ r90 $ r90 testDibujo
-
-testRot180 = TestCase $ assertEqual "Rotation 180 degrees twice" expected result
-  where
-    expected = testDibujo
-    result = r180 $ r180 testDibujo
 
 testRot270 = TestCase $ assertEqual "Rotar 270 grados y luego 90 grados" expected result
   where
@@ -100,5 +100,8 @@ tests = TestList [
 
 main :: IO ()
 main = do
-  _ <- runTestTT tests
-  return ()
+  results <- runTestTT tests
+  putStrLn $ "\nNúmero de tests ejecutados: " ++ show (cases results)
+  putStrLn $ "\nNúmero de tests que pasaron: " ++ show (tried results - errors results - failures results)
+  putStrLn $ "\nNúmero de errores: " ++ show (errors results)
+  putStrLn $ "\nNúmero de fallos: " ++ show (failures results)

@@ -35,10 +35,9 @@ infixr 7 .-.
 infixr 8 ///
 
 comp :: Int -> (a -> a) -> a -> a
-comp n f x | n < 0 = error "Error: No se puede componer una funcion con valores negativos"
-        | n == 0 = x
-        | otherwise = comp (n - 1) f (f x)
-
+comp 0 f x = x
+comp n f x | n > 0 = f (comp (n - 1) f x)
+           | otherwise = error "Error: No se puede componer una funcion con valores negativos"
 
 -- Funciones constructoras
 figura :: a -> Dibujo a
@@ -57,7 +56,9 @@ rot45 :: Dibujo a -> Dibujo a
 rot45 = Rot45
 
 rotar :: Dibujo a -> Dibujo a
-rotar = Rotar
+rotar dib = case dib of 
+    Rotar (Rotar (Rotar dib_rot)) -> dib_rot
+    _ -> Rotar dib
 
 espejar :: Dibujo a -> Dibujo a
 espejar = Espejar
