@@ -2,7 +2,7 @@ module Main (
     main
 ) where
 import Test.HUnit
-import Pred (Pred, cambiar, anyFig, allFig)
+import Pred (Pred, cambiar, anyFig, allFig, orP, andP, falla)
 import Dibujo (Dibujo, figura)
 
 -- Tests para 'cambiar'
@@ -34,10 +34,41 @@ testAllFig = TestCase $ assertEqual "AllFig" expected result
         expected = True
         result = allFig predicado dibujo
 
+-- Tests para 'andP'
+testAndP = TestCase $ assertEqual "AndP" expected result
+    where
+        predicado1 :: Pred String
+        predicado1 = (== "a")
+        predicado2 :: Pred String
+        predicado2 = (== "b")
+        elemento = "a"
+        expected = False
+        result = andP predicado1 predicado2 elemento
+
+-- Tests para 'orP'
+testOrP = TestCase $ assertEqual "OrP" expected result
+    where
+        predicado1 :: Pred String
+        predicado1 = (== "a")
+        predicado2 :: Pred String
+        predicado2 = (== "b")
+        elemento = "a"
+        expected = True
+        result = orP predicado1 predicado2 elemento
+
+-- Tests para 'falla'
+testFalla = TestCase $ assertEqual "Falla" expected result
+    where
+        expected = True
+        result = falla
+
 tests = TestList [
      testCambiar,
      testAnyFig,
-     testAllFig
+     testAllFig,
+     testAndP,
+     testOrP,
+     testFalla
     ]
 
 main :: IO ()
