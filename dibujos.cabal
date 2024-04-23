@@ -85,6 +85,7 @@ test-suite predicados
     type:             exitcode-stdio-1.0
     hs-source-dirs:   test src
     main-is:          TestPred.hs
+    other-modules:    Dibujo
     build-depends:    base ^>=4.17.2.1,
                       HUnit ^>=1.6.2.0,
                       mtl
