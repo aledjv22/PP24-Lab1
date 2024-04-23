@@ -19,8 +19,6 @@ type Escher = Bool
 blank :: Bool
 blank = False
 
-
-
 fish2 p = espejar (rot45 p)
 
 fish3 p = r270 (fish2 p)
