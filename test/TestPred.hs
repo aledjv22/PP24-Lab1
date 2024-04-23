@@ -83,5 +83,8 @@ tests = TestList [
 
 main :: IO ()
 main = do
-    _ <- runTestTT tests
-    return ()
+  results <- runTestTT tests
+  putStrLn $ "\nNúmero de tests ejecutados: " ++ show (cases results)
+  putStrLn $ "\nNúmero de tests que pasaron: " ++ show (tried results - errors results - failures results)
+  putStrLn $ "\nNúmero de errores: " ++ show (errors results)
+  putStrLn $ "\nNúmero de fallos: " ++ show (failures results)

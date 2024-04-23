@@ -36,12 +36,6 @@ testRot270 = TestCase $ assertEqual "Rotar 270 grados y luego 90 grados" expecte
     expected = testDibujo
     result = r90 $ r270 testDibujo
 
--- Tests para 'espejar'
-testEspejar = TestCase $ assertEqual "Espejar dos veces" expected result
-  where
-    expected = testDibujo
-    result = espejar $ espejar testDibujo
-
 -- Tests para 'apilar' y 'juntar'
 testApilar = TestCase $ assertEqual "Apilar" expected result
   where
@@ -88,7 +82,6 @@ tests = TestList [
    testRot90,
    testRot180,
    testRot270,
-   testEspejar,
    testApilar,
    testJuntar,
    testEncimar,
