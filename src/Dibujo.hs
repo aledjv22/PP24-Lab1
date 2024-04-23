@@ -1,11 +1,10 @@
 module Dibujo (
     Dibujo,
-    figura, rotar, espejar, rot45, apilar, juntar, encimar,
+    figura, figuras, rotar, espejar, rot45, apilar, juntar, encimar,
     r180, r270, r90,
     (.-.), (///), (^^^),
     cuarteto, encimar4, ciclar,
-    foldDib, mapDib, change,
-    --figura
+    foldDib, mapDib, change
     ) where
 import Control.Monad.RWS (Ap)
 import Data.Bits (Bits(rotate))
