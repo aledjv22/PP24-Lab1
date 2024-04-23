@@ -4,7 +4,8 @@ module Main (
 ) where
 
 import Test.HUnit
-import Dibujo (Dibujo, r90, r180, r270, espejar, apilar, juntar, encimar, encimar4, ciclar, figura, figuras, rot45)
+import Dibujo (Dibujo, r90, r180, r270, espejar, apilar, juntar, encimar)
+import Dibujo (encimar4, ciclar, figura, figuras, rot45, mapDib)
 
 testDibujo = figura ()
 
@@ -76,6 +77,11 @@ testFiguras = TestCase $ assertEqual "Figuras" expected result
     expected = ["a", "b"]
     result = figuras dibujo
 
+testMapDib = TestCase $ assertEqual "mapDib" expected result
+  where
+    expected = figura "b"
+    result = mapDib (\_ -> "b") (figura "a")
+
 tests = TestList [
    testFigura,
    testRot45,
@@ -88,7 +94,8 @@ tests = TestList [
    testEncimar,
    testEncimar4,
    testCiclar,
-   testFiguras
+   testFiguras,
+   testMapDib
   ]
 
 main :: IO ()
