@@ -2,8 +2,8 @@ module Main (
     main
 ) where
 import Test.HUnit
-import Pred (Pred, cambiar, anyFig, allFig, orP, andP, falla)
-import Dibujo (Dibujo, figura)
+import Pred (Pred, cambiar, anyFig, allFig, orP, andP, falla, esTransNoNes)
+import Dibujo (Dibujo, figura, rotar)
 
 -- Tests para 'cambiar'
 testCambiar = TestCase $ assertEqual "Cambiar" expected result
@@ -62,13 +62,23 @@ testFalla = TestCase $ assertEqual "Falla" expected result
         expected = True
         result = falla
 
+-- Tests para 'esTransNoNes'
+testEsTransNoNes = TestCase $ assertEqual "EsTransNoNes" expected result
+    where
+        transformacion :: Dibujo String -> Dibujo String
+        transformacion = rotar
+        dibujo = figura "a"
+        expected = False
+        result = esTransNoNes transformacion dibujo
+
 tests = TestList [
      testCambiar,
      testAnyFig,
      testAllFig,
      testAndP,
      testOrP,
-     testFalla
+     testFalla,
+     testEsTransNoNes
     ]
 
 main :: IO ()
