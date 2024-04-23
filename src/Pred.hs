@@ -52,7 +52,7 @@ orP :: Pred a -> Pred a -> Pred a
 orP p1 p2 p3 =  p1 p3 || p2 p3
 
 -- Predicado para transformaciones innecesarias
-esTransNoNes :: (Dibujo a -> Dibujo a) -> Eq a => Dibujo a -> Bool
+esTransNoNes :: Eq a => (Dibujo a -> Dibujo a) -> Dibujo a -> Bool
 esTransNoNes trans dib = trans dib == dib
 
 falla :: Bool
