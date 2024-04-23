@@ -1,7 +1,7 @@
 module Dibujo (
     Dibujo,
     figura, rotar, espejar, rot45, apilar, juntar, encimar,
-    r180, r270,
+    r180, r270, r90,
     (.-.), (///), (^^^),
     cuarteto, encimar4, ciclar,
     foldDib, mapDib, change,
