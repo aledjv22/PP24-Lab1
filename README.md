@@ -37,8 +37,7 @@ Otro problema fue que la figura del triángulo que extraímos del dibujo no era 
 Además, algunos problemas de documentación, como el hecho de que no se explicara qué hacer con el cambio de dibujo en la consigna, requirieron que preguntáramos qué se necesitaba hacer en esos casos.
 
 # 3. Preguntas
-## Pregunta 1
-¿Por qué están separadas las funcionalidades en los módulos indicados? Explicar detalladamente la responsabilidad de cada módulo.
+## ¿Por qué están separadas las funcionalidades en los módulos indicados? Explicar detalladamente la responsabilidad de cada módulo.
     Primero que todo, que es un modulo?
     Los modulos son bloques constructores para organizar funciones, tipos y definiciones de clases relacionadas en unidades separadas, permitiendo asi, como su nombre indica, modularidad. Un módulo en Haskell tiene el doble propósito de controlar espacios de nombres y crear tipos de datos abstractos.
     Responsabilidad de cada modulo:
@@ -70,19 +69,21 @@ Además, algunos problemas de documentación, como el hecho de que no se explica
         - Principio de recursión foldDib: Esta función recorre recursivamente la estructura Dibujo, aplicando las funciones proporcionadas para cada tipo de constructor (Figura, Encimar, etc.).
         - Función figuras: Extrae todos los elementos básicos Figura de un Dibujo.
     - Pred: Proporciona un conjunto de funciones y definiciones de tipo para trabajar con predicados sobre elementos básicos de dibujo en el módulo Dibujo.Introduce el concepto de Pred a, que representa un predicado que toma un elemento básico de dibujo de tipo a y devuelve un valor Bool que indica si el predicado se cumple para ese elemento.
-## Pregunta 2
-¿Por qué las figuras básicas no están incluidas en la definición del lenguaje, y en vez de eso, es un parámetro del tipo?
+
+## ¿Por qué las figuras básicas no están incluidas en la definición del lenguaje, y en vez de eso, es un parámetro del tipo?
 El uso de un parámetro de tipo para las figuras básicas permite abstraer el concepto de un "elemento básico de dibujo" y generalizarlo a diferentes tipos de figuras. Esto facilita la creación de funciones y estructuras de datos que operan sobre cualquier tipo de figura básica. De hecho uno de los problemas que tuvimos es que el triangulo que necesitabamos para el dibujo de Escher no era el mismo que el que se utilizo en Feo (puesto que el de Feo tiene un angulo). Al utilizar un parámetro de tipo para las figuras básicas, se permite definir diferentes implementaciones de triángulos (o cualquier otra figura) según las necesidades específicas de cada caso.
 
-## Pregunta 3
-¿Qué ventaja tiene utilizar una función de `fold` sobre hacer pattern-matching directo?
+## ¿Qué ventaja tiene utilizar una función de `fold` sobre hacer pattern-matching directo?
 En nuestro caso usamos foldDib, esta permite encapsular la lógica de recorrido y procesamiento en una única función, separándola del código específico que opera sobre cada elemento del dibujo. Nuestro fold permite ademas agregar funciones particulares para cada cada parte del dibujo (figura, rotacion, encimar, etc.)
 Ejemplos :
 La función anyFig que verifica si alguna figura básica en un dibujo satisface un predicado ilustra la aplicación de foldDib. En lugar de usar pattern matching para cada tipo de elemento de dibujo, foldDib recorre recursivamente la estructura, aplicando el predicado a cada figura y combinando los resultados utilizando la función ||.
 La función interp, que interpreta una salida de texto en una salida de un dibujo, demuestra la aplicación de foldDib para transformar una representación textual en una estructura de dibujo. En lugar de usar pattern matching para cada elemento textual, foldDib recorre la salida, aplicando las funciones de transformación correspondientes a cada tipo de comando textual.
 
-## Pregunta 4
-¿Cuál es la diferencia entre los predicados definidos en Pred.hs y los tests?
+## ¿Cuál es la diferencia entre los predicados definidos en Pred.hs y los tests?
+Los predicados definidos en [Pred.hs](./src/Pred.hs) y los tests en [TestPred.hs](./test/TestPred.hs) y [TestDibujo.hs](./test/TestDibujo.hs) tienen propósitos diferentes pero están relacionados.
+En [Pred.hs](./src/Pred.hs), los predicados son funciones que toman una figura y devuelven un valor booleano. Estos predicados se utilizan para determinar si una figura cumple con ciertas condiciones. Por ejemplo, el predicado anyFig devuelve True si alguna figura en un dibujo satisface el predicado dado, y allFig devuelve True si todas las figuras en un dibujo satisfacen el predicado dado.
+Por otro lado, los tests en [TestPred.hs](./test/TestPred.hs) y [TestDibujo.hs](./test/TestDibujo.hs) utilizan estos predicados para verificar que se comporten como se espera. Cada test define un escenario específico, ejecuta los predicados en ese escenario y luego verifica que el resultado sea el esperado. Por ejemplo, testAnyFig verifica que anyFig devuelva True cuando se le da un dibujo que contiene una figura que satisface el predicado.
+Por lo tanto, los predicados en [Pred.hs](./src/Pred.hs) son las funciones que se están probando, y los tests en [TestPred.hs](./test/TestPred.hs) y [TestDibujo.hs](./test/TestDibujo.hs) son los que verifican que estos predicados funcionen correctamente.
 
 
 # 4. Extras
