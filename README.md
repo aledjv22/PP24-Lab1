@@ -111,3 +111,21 @@ cabal test dibujo-tests --test-show-details=streaming
 ```bash
 cabal test predicados --test-show-details=streaming
 ```
+
+# 6. Resultados visuales
+A continuación se mostrarán los resultados visuales de los dibujos y tests realizados.
+
+- Dibujo de Escher:
+![Escher](https://i.ibb.co/r4T6gMW/Captura-desde-2024-04-23-21-38-56.png)
+
+- Dibujo de Feo:
+![Feo](https://i.ibb.co/nQSm0JL/Captura-desde-2024-04-23-21-39-14.png)
+
+- Dibujo de Grilla:
+![Grilla](https://i.ibb.co/LYZP84X/Captura-desde-2024-04-23-21-39-23.png)
+
+- Resultados de los tests de Dibujo:
+![TestsDibujo](https://i.ibb.co/f8fNQ2v/Captura-desde-2024-04-23-21-40-53.png)
+
+- Resultados de los tests de Pred:
+![TestsPred](https://i.ibb.co/k6gY1q9/Captura-desde-2024-04-23-21-41-07.png)
