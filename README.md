@@ -87,3 +87,27 @@ Por lo tanto, los predicados en [Pred.hs](./src/Pred.hs) son las funciones que s
 - En dibujos.cabal se agrego una biblioteca mtl ^>= 2.2.2 que si no estaba causaba error al decir que no existe Control.Monad.RWS (Ap)
 - Se agrego el punto extra de agregar --list con la peticion de seleccionar un dibujo.
 - Se agrego en pred.hs la definicion de predicados para transformaciones innecesarias generalizadas, basicamente si la transformacion causa que se vuelva a la figura original (identidad) entonces no es necesaria y devuelve True.
+
+# 5. Ejecución
+A continuación se mostrarán los comandos a utilizar para visualizar los diversos resultados de salida del proyecto.
+
+- Para visualziar el Escher:
+```bash
+cabal run dibujos.cabal Escher 
+```
+- Para visualizar el Feo:
+```bash
+cabal run dibujos.cabal Feo
+```
+- Para visualizar el Grilla:
+```bash
+cabal run dibujos.cabal Grilla
+```
+- Para visualizar los resultados de los tests de Dibujo:
+```bash
+cabal test dibujo-tests --test-show-details=streaming
+```
+- Para visualizar los resultados de los tests de Pred:
+```bash
+cabal test predicados --test-show-details=streaming
+```
