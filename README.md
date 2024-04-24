@@ -1,6 +1,6 @@
 ---
 title: Laboratorio de Funcional
-author: Arne José Müller Carrizo, María José Villegas, Alejandro Díaz
+author: Arne José Müller Carrizo, Victor Alejandro Díaz Jáuregui, María José Villegas
 ---
 La consigna del laboratorio está en https://tinyurl.com/funcional-2024-famaf
 
@@ -38,37 +38,34 @@ Además, algunos problemas de documentación, como el hecho de que no se explica
 
 # 3. Preguntas
 ## ¿Por qué están separadas las funcionalidades en los módulos indicados? Explicar detalladamente la responsabilidad de cada módulo.
-    Primero que todo, que es un modulo?
-    Los modulos son bloques constructores para organizar funciones, tipos y definiciones de clases relacionadas en unidades separadas, permitiendo asi, como su nombre indica, modularidad. Un módulo en Haskell tiene el doble propósito de controlar espacios de nombres y crear tipos de datos abstractos.
-    Responsabilidad de cada modulo:
-    - Main: es el punto de entrada del programa y brinda funcionalidades para mostrar e interactuar con distintas configuraciones de dibujos. 
-        Almacena las configuraciones para los dibujos disponibles.
-        Interpreta el dibujo pedido, llamando a initial del modulo Interp para junto a la configuracion (configs) y el nombre del dibujo, empiece a reclearlo.
-        En la funcion principal de Main se ven los argumentos de la linea de comandos y 
-            Si hay más de dos argumentos o ninguno, muestra un mensaje de error y sale.
-            Si el primer argumento es "-l" o "--list", lista los nombres de dibujo disponibles basado en la función name en cada configuración y sale (aclarar que con --list tambien hace un prompt para pedir por un nombre de dibujo que se desee dibujar).
-            Si el primer argumento es "-a" seguido por un nombre de dibujo, utiliza InterpHaha.
-            Si el primer argumento es "-s" seguido por un nombre de dibujo, utiliza initialSVG' de InterpSVG.
-            De lo contrario, intenta encontrar un dibujo nombrado como el primer argumento en la lista configs y llama a la función initial' para mostrarlo.
-    - FloatingPic: Define tipos y funciones relacionadas a crear y manipular dibujos de puntos flotantes, en general es para hacer la grilla del fondo de los dibujos cuando se inicializan. Ademas tiene una funcion que se llama vacia que devuelve un tipo de dato llamado blank de la libreria Gloss que devuelve un tipo Picture sin nada, esto lo utilizamos particularmente en el dibujo de Escher cuando el dibujo era igual a False.
-    - Interp: Define funciones para la interpretacion de contructores de dibujos y luego mostrar la imagen resultante utilizando funciones y tipos de el modulo FloatinPic.
-    - Dibujo: Define un tipo de dato y funciones para representar y manipular dibujos. Proporciona una estructura jerárquica para los dibujos, permitiendo la composición de elementos simples en otros más complejos. Además, ofrece funciones para aplicar transformaciones y recorrer la estructura del dibujo.
-        En particular tenemos:
-        - El tipo de dato Dibujo: Se define utilizando tipos de datos algebraicos (ADTs) para representar diferentes elementos de dibujo y sus composiciones. Permite la creación de dibujos complejos combinando elementos más simples
-        - Combinadores: Funcionan como operadores infijos que representan operaciones de dibujo específicas
-        - Funciones: 
-            - Constructoras: Estas funciones son los bloques de construcción fundamentales para crear dibujos. Sirven para generar elementos de dibujo básicos y combinarlos en estructuras más complejas. Ej : figura, encimar, apilar, juntar, rot45, rotar, espejar
-            - Transformadoras: Estas funciones se utilizan para construir dibujos incluso mas complejos con el uso de las funciones constructoras basicas. Ej : r90, r180, r270, encimar4, cuarteto, ciclar
-        - Funciones para manipulación: Funciones para manipular y transformar dibujos.
-            - mapDib sirve para transformaciones elemento a elemento mientras preserva la estructura del dibujo. 
-            Aplica una función elemento a elemento a un valor Dibujo, similar a la función map estándar en Haskell.
-            Aplica la función proporcionada (f) directamente al valor de datos dentro de Figura. Esto le permite modificar potencialmente las propiedades del elemento (por ejemplo, cambiar su color).
-            - change se enfoca en modificar todos los elementos básicos dentro del dibujo, alterando potencialmente los datos y la estructura.
-            Modifica todos los elementos básicos (Figura) dentro de un valor Dibujo basado en una función proporcionada.
-            Es posible que la función en sí no modifique directamente los datos dentro de Figura. Sin embargo, la función proporcionada (f) que pasa para cambiar puede alterar potencialmente los datos asociados con el elemento Figura.(Esta funcion la utilizamos en cambiar del modulo Pred)
-        - Principio de recursión foldDib: Esta función recorre recursivamente la estructura Dibujo, aplicando las funciones proporcionadas para cada tipo de constructor (Figura, Encimar, etc.).
-        - Función figuras: Extrae todos los elementos básicos Figura de un Dibujo.
-    - Pred: Proporciona un conjunto de funciones y definiciones de tipo para trabajar con predicados sobre elementos básicos de dibujo en el módulo Dibujo.Introduce el concepto de Pred a, que representa un predicado que toma un elemento básico de dibujo de tipo a y devuelve un valor Bool que indica si el predicado se cumple para ese elemento.
+Primero que todo, ¿qué es un modulo?
+Los modulos son bloques constructores para organizar funciones, tipos y definiciones de clases relacionadas en unidades separadas permitiendo asi como su nombre indica modularidad. Un módulo en Haskell tiene el doble propósito de controlar espacios de nombres y crear tipos de datos abstractos.
+Responsabilidad de cada modulo:
+
+- Main: es el punto de entrada del programa y brinda funcionalidades para mostrar e interactuar con distintas configuraciones de dibujos, almacena las configuraciones para los dibujos disponibles, interpreta el dibujo pedido, llamando a initial del modulo Interp para junto a la configuración (configs) y el nombre del dibujo, empiece a reclearlo. En la función principal de `Main` se ven los argumentos de la linea de comandos y: 
+    - Si hay más de dos argumentos o ninguno, muestra un mensaje de error y sale.
+    - Si el primer argumento es "-l" o "--list", lista los nombres de dibujo disponibles basado en la función name en cada configuración y sale (aclarar que con --list tambien hace un prompt para pedir por un nombre de dibujo que se desee dibujar).
+    - Si el primer argumento es "-a" seguido por un nombre de dibujo, utiliza InterpHaha.
+    - Si el primer argumento es "-s" seguido por un nombre de dibujo, utiliza initialSVG' de InterpSVG.
+    - De lo contrario, intenta encontrar un dibujo nombrado como el primer argumento en la lista configs y llama a la función initial' para mostrarlo.
+- FloatingPic: Define tipos y funciones relacionadas a crear y manipular dibujos de puntos flotantes, en general es para hacer la grilla del fondo de los dibujos cuando se inicializan. Ademas tiene una funcion que se llama vacia que devuelve un tipo de dato llamado blank de la libreria Gloss que devuelve un tipo Picture sin nada, esto lo utilizamos particularmente en el dibujo de Escher cuando el dibujo era igual a False.
+- Interp: Define funciones para la interpretacion de contructores de dibujos y luego mostrar la imagen resultante utilizando funciones y tipos de el modulo FloatinPic.
+- Dibujo: Define un tipo de dato y funciones para representar y manipular dibujos. Proporciona una estructura jerárquica para los dibujos, permitiendo la composición de elementos simples en otros más complejos. Además, ofrece funciones para aplicar transformaciones y recorrer la estructura del dibujo. En particular tenemos:
+    - El tipo de dato Dibujo: Se define utilizando tipos de datos algebraicos (ADTs) para representar diferentes elementos de dibujo y sus composiciones. Permite la creación de dibujos complejos combinando elementos más simples
+    - Combinadores: Funcionan como operadores infijos que representan operaciones de dibujo específicas
+    - Funciones: 
+        - Constructoras: Estas funciones son los bloques de construcción fundamentales para crear dibujos. Sirven para generar elementos de dibujo básicos y combinarlos en estructuras más complejas. Ej : figura, encimar, apilar, juntar, rot45, rotar, espejar
+        - Transformadoras: Estas funciones se utilizan para construir dibujos incluso mas complejos con el uso de las funciones constructoras basicas. Ej : r90, r180, r270, encimar4, cuarteto, ciclar
+    - Funciones para manipulación: Funciones para manipular y transformar dibujos.
+        - `mapDib` sirve para transformaciones elemento a elemento mientras preserva la estructura del dibujo. 
+        Aplica una función elemento a elemento a un valor Dibujo, similar a la función map estándar en Haskell.
+        Aplica la función proporcionada (f) directamente al valor de datos dentro de Figura. Esto le permite modificar potencialmente las propiedades del elemento (por ejemplo, cambiar su color).
+        - change se enfoca en modificar todos los elementos básicos dentro del dibujo, alterando potencialmente los datos y la estructura.
+        Modifica todos los elementos básicos (Figura) dentro de un valor Dibujo basado en una función proporcionada.
+        Es posible que la función en sí no modifique directamente los datos dentro de Figura. Sin embargo, la función proporcionada (f) que pasa para cambiar puede alterar potencialmente los datos asociados con el elemento Figura.(Esta funcion la utilizamos en cambiar del modulo Pred)
+    - Principio de recursión foldDib: Esta función recorre recursivamente la estructura Dibujo, aplicando las funciones proporcionadas para cada tipo de constructor (Figura, Encimar, etc.).
+    - Función figuras: Extrae todos los elementos básicos Figura de un Dibujo.
+- Pred: Proporciona un conjunto de funciones y definiciones de tipo para trabajar con predicados sobre elementos básicos de dibujo en el módulo Dibujo.Introduce el concepto de Pred a, que representa un predicado que toma un elemento básico de dibujo de tipo a y devuelve un valor Bool que indica si el predicado se cumple para ese elemento.
 
 ## ¿Por qué las figuras básicas no están incluidas en la definición del lenguaje, y en vez de eso, es un parámetro del tipo?
 El uso de un parámetro de tipo para las figuras básicas permite abstraer el concepto de un "elemento básico de dibujo" y generalizarlo a diferentes tipos de figuras. Esto facilita la creación de funciones y estructuras de datos que operan sobre cualquier tipo de figura básica. De hecho uno de los problemas que tuvimos es que el triangulo que necesitabamos para el dibujo de Escher no era el mismo que el que se utilizo en Feo (puesto que el de Feo tiene un angulo). Al utilizar un parámetro de tipo para las figuras básicas, se permite definir diferentes implementaciones de triángulos (o cualquier otra figura) según las necesidades específicas de cada caso.
