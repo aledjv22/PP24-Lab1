@@ -28,7 +28,7 @@ Acepten todas las opciones por defecto, en particular asegurénse de instalar ms
 Msys2 incluye el manejador de paquetes `pacman` (originalmente de ArchLinux), entonces instalar librerías y programas es muy sencillo. Dentro de `mintty` deben hacer:
 ```bash
 pacman -S mingw-w64-x86_64-freeglut
- ```
+```
 
 # Gloss con GLFW
 
@@ -42,6 +42,14 @@ cabal install gloss --flags="GLFW -GLUT
 
 1. Usar una máquina virtual. 
 2. Hace el lab con la biblioteca haha o lucid-svg.
+
+# HUnit
+
+Para correr los tests necesitan instalar HUnit. Para ello ejecuten:
+
+```bash
+cabal install --lib HUnit
+```
 
 # Verificar que gloss está funcionando
 
@@ -60,3 +68,17 @@ cabal test haha
 ```
 
 El test de haha debería mostrarles un rectángulo hecho con asteriscos. Si ven ese rectángulo el test funcionó; no le presten atención al output del test que dice que falló.
+
+# Ejecutar los tests de Dibujo
+Para ejecutar los tests de Dibujo deben ejecutar:
+
+```bash
+cabal test dibujo-tests --test-show-details=streaming
+```
+
+# Ejecutar los tests de Pred
+Para ejecutar los tests de Pred deben ejecutar:
+
+```bash
+cabal test predicados --test-show-details=streaming 
+```
